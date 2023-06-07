@@ -1,6 +1,4 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import React from "react";
 import { AiOutlineBorder, AiOutlineCheck } from "react-icons/ai";
 
 export async function getStaticProps() {
@@ -12,26 +10,28 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home({ data }) {
-  const myData = data.filter((d) => d.userId === 1);
+const completed = ({ data }) => {
+  const myData = data.filter((d) => d.userId === 1 && d.completed);
 
   const fetchData = myData.map((data) => (
     <li className="item" key={data.id}>
       <span className="box">
         <AiOutlineBorder />
-        {data.completed && (
-          <span className="check">
-            <AiOutlineCheck />
-          </span>
-        )}
+        <span className="check">
+          <AiOutlineCheck />
+        </span>
       </span>
       {data.title}
     </li>
   ));
 
   return (
-    <div className="content hidden">
-      <ul className="list">{fetchData}</ul>
+    <div className="content scroll">
+      <ul className="list">
+        {fetchData}
+      </ul>
     </div>
   );
-}
+};
+
+export default completed;
